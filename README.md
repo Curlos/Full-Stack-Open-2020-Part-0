@@ -1,1 +1,1 @@
-# Full-Stack-Open-2020-Part-0
+# Full-Stack-Open-2020
