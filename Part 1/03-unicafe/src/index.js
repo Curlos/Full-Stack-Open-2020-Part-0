@@ -1,6 +1,26 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+const Statistics = (props) => {
+  const good = props.values[0]
+  const neutral = props.values[1]
+  const bad = props.values[2]
+  const total = good + neutral + bad;
+  const average = (good + neutral + bad) / 3;
+  let positive = !isNaN(good / total) ? good / total * 100 : 0;
+
+  return (
+    <div>
+      <div>{props.text[0]} {good}</div>
+      <div>{props.text[1]} {neutral}</div>
+      <div>{props.text[2]} {bad}</div>
+      <div>all {total}</div>
+      <div>average {average}</div>
+      <div>positive {positive}%</div>
+    </div>
+  )
+}
+
 const App = () => {
   // save clicks of each button to own state
   const [good, setGood] = useState(0)
@@ -21,23 +41,13 @@ const App = () => {
 
   return (
     <div>
-      <ButtonHeader />
+      <h1>give feedback</h1>
       <Button handleClick={handleGoodClick} text="good" />
       <Button handleClick={handleNeutralClick} text="neutral" />
       <Button handleClick={handleBadClick} text="bad" />
 
-      <StatisticsHeader />
-      <Statistics value={good} text="good" />
-      <Statistics value={neutral} text="neutral" />
-      <Statistics value={bad} text="bad" />
-    </div>
-  )
-}
-
-const ButtonHeader = (props) => {
-  return (
-    <div>
-      <h1>give feedback</h1>
+      <h1>statistics</h1>
+      <Statistics values={[good, neutral, bad]} text={["good", "neutral", "bad"]} />
     </div>
   )
 }
@@ -45,22 +55,6 @@ const ButtonHeader = (props) => {
 const Button = ({ handleClick, text }) => {
   return (
     <button onClick={handleClick}>{text}</button>
-  )
-}
-
-const StatisticsHeader = (props) => {
-  return (
-    <div>
-      <h1>statistics</h1>
-    </div>
-  )
-}
-
-const Statistics = (props) => {
-  return (
-    <div>
-      {props.text} {props.value}
-    </div>
   )
 }
 
