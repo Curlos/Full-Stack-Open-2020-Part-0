@@ -10,6 +10,14 @@ const Statistics = (props) => {
   const average = (good + neutral + bad) / 3;
   let positive = !isNaN(good / total) ? good / total * 100 : 0;
 
+  if (total === 0) {
+    return (
+      <div>
+        No feedback given
+      </div>
+    )
+  }
+
   return (
     <div>
       <div>{props.text[0]} {good}</div>
