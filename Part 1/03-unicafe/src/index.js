@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+// Gather statistics
 const Statistics = (props) => {
   const good = props.values[0]
   const neutral = props.values[1]
