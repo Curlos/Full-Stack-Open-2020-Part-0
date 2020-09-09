@@ -5,39 +5,48 @@ const App = () => {
         { name: 'Arto Hellas' }
     ])
     const [newName, setNewName] = useState('')
+    const [newNumber, setNewNumber] = useState('')
 
-    const addName = (event) => {
+    const addPerson = (event) => {
         event.preventDefault()
 
-        const nameObject = {
+        const person = {
             name: newName,
+            number: newNumber,
             id: persons.length + 1,
         }
 
-        const names = persons.map(person => person.name)
+        const names = persons.map(p => p.name)
 
-        if (names.includes(nameObject.name)) {
-            alert(`${nameObject.name} is already added to the phonebook`)
+        if (names.includes(person.name)) {
+            alert(`${person.name} is already added to the phonebook`)
         } else {
-            console.log('hello poop')
-            setPersons(persons.concat(nameObject))
+            setPersons(persons.concat(person))
             setNewName('')
+            setNewNumber('')
         }
 
     }
 
     const handleNameChange = (event) => {
         const name = event.target.value
-        console.log(name)
         setNewName(name)
+    }
+
+    const handleNumberChange = (event) => {
+        const number = event.target.value
+        setNewNumber(number)
     }
 
     return (
         <div>
             <h2>Phonebook</h2>
-            <form onSubmit={addName}>
+            <form onSubmit={addPerson}>
                 <div>
                     name: <input value={newName} onChange={handleNameChange} />
+                </div>
+                <div>
+                    number: <input value={newNumber} onChange={handleNumberChange} />
                 </div>
                 <div>
                     <button type="submit">add</button>
@@ -46,7 +55,7 @@ const App = () => {
             <h2>Numbers</h2>
 
             {persons.map(person =>
-                <div key={person.name}>{person.name}</div>
+                <div key={person.name}>{person.name} {person.number}</div>
             )}
 
         </div>
