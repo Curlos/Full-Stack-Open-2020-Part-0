@@ -13,14 +13,23 @@ const App = () => {
             name: newName,
             id: persons.length + 1,
         }
-        setPersons(persons.concat(nameObject))
-        setNewName('')
+
+        const names = persons.map(person => person.name)
+
+        if (names.includes(nameObject.name)) {
+            alert(`${nameObject.name} is already added to the phonebook`)
+        } else {
+            console.log('hello poop')
+            setPersons(persons.concat(nameObject))
+            setNewName('')
+        }
 
     }
 
     const handleNameChange = (event) => {
-        console.log(event.target.value)
-        setNewName(event.target.value)
+        const name = event.target.value
+        console.log(name)
+        setNewName(name)
     }
 
     return (
@@ -35,9 +44,11 @@ const App = () => {
                 </div>
             </form>
             <h2>Numbers</h2>
+
             {persons.map(person =>
                 <div key={person.name}>{person.name}</div>
             )}
+
         </div>
     )
 }
