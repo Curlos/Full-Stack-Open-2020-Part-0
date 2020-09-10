@@ -13,7 +13,6 @@ const App = () => {
     axios
       .get('https://restcountries.eu/rest/v2/all')
       .then(response => {
-        console.log(response.data.forEach(country => console.log(country.flag)))
         setCountries(response.data)
       })
   }, [])
@@ -26,10 +25,6 @@ const App = () => {
   }
 
   const countriesToShow = newFilter === '' ? countries : countries.filter(c => c.name.toLowerCase().includes(newFilter.toLowerCase()))
-
-  console.log(countriesToShow)
-
-
 
   return (
     <div>
