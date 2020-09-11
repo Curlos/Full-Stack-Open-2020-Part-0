@@ -19,19 +19,16 @@ const App = () => {
             .then(initialPeople => {
                 setPersons(initialPeople)
             })
-        axios
-            .get('http://localhost:3001/persons')
-            .then(response => {
-                console.log('promise fulfilled', response.data)
-                setPersons(response.data)
-            })
     }, [])
 
     const deletePerson = (id) => {
-
+        personService
+            .deletePerson(id)
+            .then(() => {
+                let newArr = persons.filter(person => person.id !== id)
+                setPersons(newArr)
+            })
     }
-
-    console.log('render', persons.length, 'people')
 
     const addPerson = (event) => {
         event.preventDefault()

@@ -5,7 +5,7 @@ const Persons = ({ peopleToShow, deletePerson }) => {
         <div>
             {peopleToShow.map(person =>
                 <div key={person.name}>
-                    {person.name} {person.number} <button onClick={deletePerson}>delete</button>
+                    {person.name} {person.number} <button onClick={() => window.confirm(`Delete ${person.name}?`) ? deletePerson(person.id) : ''}>delete</button>
                 </div>
             )}
         </div>
