@@ -38,16 +38,15 @@ const App = () => {
         if (names.includes(person.name)) {
             alert(`${person.name} is already added to the phonebook`)
         } else {
-            setPersons(persons.concat(person))
-            setNewName('')
-            setNewNumber('')
+            // Save the numbers that are added to the backend server
+            axios
+                .post('http://localhost:3001/persons', person)
+                .then(response => {
+                    setPersons(persons.concat(response.data))
+                    setNewName('')
+                    setNewNumber('')
+                })
         }
-
-        axios
-            .post('http://localhost:3001/persons', person)
-            .then(response => {
-                console.log(response)
-            })
     }
 
     const handleNameChange = (event) => {
