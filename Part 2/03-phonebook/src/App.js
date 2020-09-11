@@ -42,7 +42,11 @@ const App = () => {
         const names = persons.map(p => p.name)
 
         if (names.includes(person.name)) {
-            alert(`${person.name} is already added to the phonebook`)
+            const newID = names.indexOf(person.name) + 1
+            if (window.confirm(`${person.name} is already added to the phonebook, replace the old number with a new one?`)) {
+                setPersons(persons.map(p => p.name === person.name ? person : p))
+                personService.updateNumber(person, newID)
+            }
         } else {
             // Save the numbers that are added to the backend server
             personService
@@ -54,6 +58,8 @@ const App = () => {
                 })
         }
     }
+
+    console.log(persons)
 
     const handleNameChange = (event) => {
         const name = event.target.value
