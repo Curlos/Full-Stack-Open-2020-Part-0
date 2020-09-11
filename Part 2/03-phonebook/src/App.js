@@ -3,6 +3,7 @@ import axios from 'axios'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import personService from './services/persons'
 
 const App = () => {
     const [persons, setPersons] = useState([
@@ -13,7 +14,11 @@ const App = () => {
     const [newFilter, setNewFilter] = useState('')
 
     useEffect(() => {
-        console.log('effect')
+        personService
+            .getPeople()
+            .then(initialPeople => {
+                setPersons(initialPeople)
+            })
         axios
             .get('http://localhost:3001/persons')
             .then(response => {
@@ -21,6 +26,10 @@ const App = () => {
                 setPersons(response.data)
             })
     }, [])
+
+    const deletePerson = (id) => {
+
+    }
 
     console.log('render', persons.length, 'people')
 
@@ -39,10 +48,10 @@ const App = () => {
             alert(`${person.name} is already added to the phonebook`)
         } else {
             // Save the numbers that are added to the backend server
-            axios
-                .post('http://localhost:3001/persons', person)
-                .then(response => {
-                    setPersons(persons.concat(response.data))
+            personService
+                .create(person)
+                .then(returnedPerson => {
+                    setPersons(persons.concat(returnedPerson))
                     setNewName('')
                     setNewNumber('')
                 })
@@ -78,7 +87,7 @@ const App = () => {
 
             <h2>Numbers</h2>
 
-            <Persons peopleToShow={peopleToShow} />
+            <Persons peopleToShow={peopleToShow} deletePerson={deletePerson} />
 
         </div>
     )

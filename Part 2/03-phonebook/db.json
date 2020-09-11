@@ -1,49 +1,43 @@
 {
-  "persons": [
-    {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "12-43-234345",
-      "id": 3
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
-      "id": 4
-    },
-    {
-      "name": "aaa",
-      "number": "aaaa",
-      "id": 5
-    },
-    {
-      "name": "carlos",
-      "number": "anthony",
-      "id": 6
-    },
-    {
-      "name": "aaa",
-      "number": "aaa",
-      "id": 7
-    },
-    {
-      "name": "aaasasdfs",
-      "number": "martinez",
-      "id": 8
-    },
-    {
-      "name": "ddd",
-      "number": "ddd",
-      "id": 9
-    }
-  ]
+    "persons": [{
+            "name": "Arto Hellas",
+            "number": "040-123456",
+            "id": 1
+        },
+        {
+            "name": "Ada Lovelace",
+            "number": "39-44-5323523",
+            "id": 2
+        },
+        {
+            "name": "Dan Abramov",
+            "number": "12-43-234345",
+            "id": 3
+        },
+        {
+            "name": "Mary Poppendieck",
+            "number": "39-23-6423122",
+            "id": 4
+        },
+        {
+            "name": "LeBron James",
+            "number": "23",
+            "id": 5
+        },
+        {
+            "name": "Anthony Davis",
+            "number": "3",
+            "id": 6
+        },
+        {
+            "name": "James Harden",
+            "number": "13",
+            "id": 7
+        },
+        {
+            "name": "Russell Westbrook",
+            "number": "0",
+            "id": 8
+        }
+    ]
 }
