@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'https://part3-phonebook-app.herokuapp.com/api/persons'
+const baseUrl = '/api/persons'
 
 const getPeople = () => {
     const request = axios.get(baseUrl)
