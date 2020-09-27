@@ -1,1 +1,1 @@
-GET https://part3-phonebook-app.herokuapp.com/api/persons
+GET http://localhost:3001/api/persons
