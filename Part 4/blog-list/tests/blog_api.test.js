@@ -49,9 +49,17 @@ test("all blogs are returned", async () => {
 
 test("a specific blog is within the returned blogs", async () => {
 	const response = await api.get("/api/blogs");
-
 	const titles = response.body.map((r) => r.title);
 	expect(titles).toContain("Go To Statement Considered Harmful");
+});
+
+test("unique identifier property of the blog posts is named id", async () => {
+	const response = await api.get("/api/blogs");
+	const keys = response.body.map((r) => Object.keys(r));
+	const keysTest = keys.map(
+		(blogKeys) => blogKeys.includes("id") && !blogKeys.includes("_id")
+	);
+	expect(keysTest).not.toContain(false);
 });
 
 afterAll(() => {
