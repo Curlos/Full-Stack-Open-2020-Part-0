@@ -11,25 +11,13 @@ const totalLikes = (blogs) => {
 };
 
 const favoriteBlog = (blogs) => {
-	let blogWithMostLikes = [];
-
-	const maxValueOfLikes = Math.max(
-		...arr1.map((blog) => {
-			return blog.likes;
-		}),
-		0
-	);
-
-	console.log(maxValueOfLikes);
-
-	return arr1.forEach((blog) => {
-		if (blog.likes === maxValueOfLikes) {
-			return blog;
-		}
-	});
+	blogs.sort((a, b) => (a.likes < b.likes ? 1 : -1));
+	const favBlog = blogs[0];
+	return favBlog;
 };
 
 module.exports = {
 	dummy,
 	totalLikes,
+	favoriteBlog,
 };

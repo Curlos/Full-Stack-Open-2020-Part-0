@@ -1,7 +1,7 @@
 const listHelper = require("../utils/list_helper");
 
-describe("total likes", () => {
-	test("when list has only one blog, equals the likes of that", () => {
+describe("favorite blog", () => {
+	test("when list has only one blog, that is the favorite blog", () => {
 		const listWithOneBlog = [
 			{
 				_id: "5a422aa71b54a676234d17f8",
@@ -13,8 +13,19 @@ describe("total likes", () => {
 				__v: 0,
 			},
 		];
-		const result = listHelper.totalLikes(listWithOneBlog);
-		expect(result).toBe(5);
+
+		const favBlog = {
+			_id: "5a422aa71b54a676234d17f8",
+			title: "Go To Statement Considered Harmful",
+			author: "Edsger W. Dijkstra",
+			url:
+				"http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+			likes: 5,
+			__v: 0,
+		};
+
+		const result = listHelper.favoriteBlog(listWithOneBlog);
+		expect(result).toEqual(favBlog);
 	});
 
 	test("of many values is the sum of all the likes in each blog", () => {
@@ -48,6 +59,17 @@ describe("total likes", () => {
 			},
 		];
 
-		expect(listHelper.totalLikes(listWithManyBlogs)).toBe(75);
+		const favBlog = {
+			_id: "5f73d9c67db76c009eba7ba5",
+			title: "4 factors that could help Heat upset Lakers",
+			author: "Sekou Smith",
+			url:
+				"https://www.nba.com/article/2020/09/29/4-factors-how-heat-can-upset-lakers",
+			likes: 50,
+			__v: 0,
+		};
+
+		const result = listHelper.favoriteBlog(listWithManyBlogs);
+		expect(result).toEqual(favBlog);
 	});
 });
