@@ -46,9 +46,40 @@ const mostBlogs = (blogs) => {
 	};
 };
 
+const mostLikes = (blogs) => {
+	if (blogs.length === 0) {
+		return "No blogs in list";
+	}
+
+	let dict = new Map();
+	blogs.forEach((blog) => {
+		if (!dict.has(blog.author)) {
+			dict.set(blog.author, blog.likes);
+		} else {
+			dict.set(blog.author, dict.get(blog.author) + blog.likes);
+		}
+	});
+
+	let mostLikesAuthor = blogs[0].author;
+	let mostL = dict.get(blogs[0].author);
+
+	dict.forEach((likes, author) => {
+		if (likes > mostL) {
+			mostLikesAuthor = author;
+			mostL = likes;
+		}
+	});
+
+	return {
+		author: mostLikesAuthor,
+		likes: mostL,
+	};
+};
+
 module.exports = {
 	dummy,
 	totalLikes,
 	favoriteBlog,
 	mostBlogs,
+	mostLikes,
 };

@@ -7,7 +7,7 @@ describe("most blogs", () => {
 		expect(result).toBe("No blogs in list");
 	});
 
-	test("when list has only one blog, equals the author of that blog", () => {
+	test("when list has only one blog, equals the likes of that", () => {
 		const listWithOneBlog = [
 			{
 				_id: "5a422aa71b54a676234d17f8",
@@ -19,14 +19,14 @@ describe("most blogs", () => {
 				__v: 0,
 			},
 		];
-		const result = listHelper.mostBlogs(listWithOneBlog);
+		const result = listHelper.mostLikes(listWithOneBlog);
 		expect(result).toEqual({
 			author: "Edsger W. Dijkstra",
-			blogs: 1,
+			likes: 5,
 		});
 	});
 
-	test("of many values is the author with most blogs", () => {
+	test("of many values is the author whose blogs have the most combined likes", () => {
 		const listWithManyBlogs = [
 			{
 				_id: "5f73b157db1c0bf60bad5b83",
@@ -113,9 +113,9 @@ describe("most blogs", () => {
 			},
 		];
 
-		expect(listHelper.mostBlogs(listWithManyBlogs)).toEqual({
-			author: "Edsger W. Dijkstra",
-			blogs: 5,
+		expect(listHelper.mostLikes(listWithManyBlogs)).toEqual({
+			author: "Sekou Smith",
+			likes: 70,
 		});
 	});
 });
