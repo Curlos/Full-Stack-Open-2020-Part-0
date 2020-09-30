@@ -4,8 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node app.js",
-		"dev": "nodemon app.js",
+		"start": "node index.js",
+		"dev": "nodemon index.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build:ui": "rm -rf build && cd ../03-phonebook-frontend && npm run build --prod && cp -r build ../02-phonebook-backend",
 		"deploy": "git push heroku master",
