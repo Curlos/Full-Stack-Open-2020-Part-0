@@ -11,7 +11,7 @@
 		"deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
 		"logs:prod": "heroku logs --tail",
 		"lint": "eslint .",
-		"test": "jest --verbose"
+		"test": "cross-env NODE_ENV=test jest --verbose --runInBand"
 	},
 	"author": "",
 	"license": "ISC",
@@ -24,10 +24,12 @@
 		"morgan": "^1.10.0"
 	},
 	"devDependencies": {
+		"cross-env": "^7.0.2",
 		"eslint": "^7.10.0",
 		"eslint-plugin-react": "^7.21.2",
 		"jest": "^26.4.2",
-		"nodemon": "^2.0.4"
+		"nodemon": "^2.0.4",
+		"supertest": "^5.0.0"
 	},
 	"jest": {
 		"testEnvironment": "node"
