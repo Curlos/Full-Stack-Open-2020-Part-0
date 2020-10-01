@@ -86,6 +86,30 @@ test("a valid blog can be added", async () => {
 	expect(expect(response.body).toHaveLength(initialBlogs.length + 1));
 });
 
+test("if the likes property is missing from the request, it will default to the value 0", async () => {
+	const newBlog = {
+		title: "Lakers vs. Heat: How the teams match up in the NBA Finals",
+		author: "Broderick Turner",
+		url:
+			"https://www.latimes.com/sports/lakers/story/2020-09-30/lakers-vs-heat-nba-finals-matchups",
+		likes: undefined,
+	};
+
+	await api
+		.post("/api/blogs")
+		.send(newBlog)
+		.expect(200)
+		.expect("Content-Type", /application\/json/);
+
+	const response = await api.get("/api/blogs");
+	const keys = response.body.map((r) => Object.keys(r));
+
+	const likes = response.body.map((blog) => blog.likes);
+
+	expect(likes).not.toContain(undefined);
+	expect(likes).toContain(0);
+});
+
 afterAll(() => {
 	mongoose.connection.close();
 });
