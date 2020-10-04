@@ -45,6 +45,21 @@ describe("when there is initially some blogs saved", () => {
 	});
 });
 
+describe("viewing a specific blog", () => {
+	test("succeeds with a valid id", async () => {
+		const blogsAtStart = await helper.blogsInDb();
+
+		const blogToView = blogsAtStart[0];
+
+		const resultBlog = await api
+			.get(`/api/blogs/${blogToView.id}`)
+			.expect(200)
+			.expect("Content-Type", /application\/json/);
+
+		expect(resultBlog.body).toEqual(blogToView);
+	});
+});
+
 describe("addition of a new blog", () => {
 	test("a valid blog can be added", async () => {
 		const newBlog = {
@@ -88,6 +103,46 @@ describe("addition of a new blog", () => {
 
 		expect(likes).not.toContain(undefined);
 		expect(likes).toContain(0);
+	});
+
+	test(" if the title and url properties are missing response with code 400", async () => {
+		const newBlog = {
+			author: "Broderick Turner",
+			likes: undefined,
+		};
+
+		await api.post("/api/blogs").send(newBlog).expect(400);
+	});
+});
+
+describe("existing blog can be updated", () => {
+	test("a valid blog can be added", async () => {
+		const newBlog = {
+			title: "Lakers vs. Heat: How the teams match up in the NBA Finals",
+			author: "Broderick Turner",
+			url:
+				"https://www.latimes.com/sports/lakers/story/2020-09-30/lakers-vs-heat-nba-finals-matchups",
+			likes: 52335,
+		};
+
+		const blogsAtStart = await helper.blogsInDb();
+		const blogToUpdate = blogsAtStart[0];
+
+		await api
+			.put(`/api/blogs/${blogToUpdate.id}`)
+			.send(newBlog)
+			.expect(200)
+			.expect("Content-Type", /application\/json/);
+
+		const blogsAtEnd = await helper.blogsInDb();
+
+		expect(blogsAtEnd.length).toBe(helper.initialBlogs.length);
+
+		const likes = blogsAtEnd.map((r) => r.likes);
+		console.log(likes);
+		console.log(blogsAtEnd);
+
+		expect(likes[0]).toEqual(newBlog.likes);
 	});
 
 	test(" if the title and url properties are missing response with code 400", async () => {
