@@ -6,7 +6,6 @@ import loginService from "./services/login";
 const App = () => {
 	const [blogs, setBlogs] = useState([]);
 	const [newBlog, setNewBlog] = useState("");
-	const [showAll, setShowAll] = useState(true);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
@@ -45,19 +44,13 @@ const App = () => {
 			setUsername("");
 			setPassword("");
 		} catch (exception) {
+			console.log("Wrong credentials");
 			setErrorMessage("Wrong credentials");
 			setTimeout(() => {
 				setErrorMessage(null);
 			}, 5000);
 		}
 	};
-
-	const blogForm = () => (
-		<form onSubmit={addBlog}>
-			<input value={newBlog} onChange={handleBlogChange} />
-			<button type="submit">save</button>
-		</form>
-	);
 
 	const loginForm = () => (
 		<form onSubmit={handleLogin}>
@@ -84,7 +77,7 @@ const App = () => {
 	);
 
 	const createNewBlogForm = () => (
-		<form onSubmit={handleLogin}>
+		<form onSubmit={addBlog}>
 			<div>
 				title
 				<input
@@ -122,7 +115,6 @@ const App = () => {
 			title: newTitle,
 			author: newAuthor,
 			url: newUrl,
-			id: blogs.length + 1,
 		};
 
 		blogService.create(blogObject).then((returnedBlog) => {
@@ -131,13 +123,10 @@ const App = () => {
 		});
 	};
 
-	const handleBlogChange = (event) => {
-		setNewBlog(event.target.value);
-	};
-
 	const handleLogout = () => {
 		setUser(null);
-		window.localStorage.removeItem("loggedBlogAppUser");
+		window.localStorage.clear();
+		window.location.reload(false);
 	};
 
 	return (
@@ -151,7 +140,6 @@ const App = () => {
 					<p>
 						{user.name} logged-in <button onClick={handleLogout}>logout</button>{" "}
 					</p>
-					{blogForm()}
 				</div>
 			)}
 
