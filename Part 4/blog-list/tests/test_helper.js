@@ -9,6 +9,7 @@ const initialBlogs = [
 		url:
 			"http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
 		likes: 5,
+		userId: "5f7b644f6bc2f640b3037064",
 		__v: 0,
 	},
 	{
@@ -18,6 +19,7 @@ const initialBlogs = [
 		url:
 			"https://www.nba.com/article/2020/09/29/4-factors-how-heat-can-upset-lakers",
 		likes: 50,
+		userId: "5f7b6cbde09c2b4583804055",
 		__v: 0,
 	},
 ];
