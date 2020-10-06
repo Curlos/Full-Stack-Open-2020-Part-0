@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Blog from "./components/Blog";
+import Notification from "./components/Notification";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
 const App = () => {
 	const [blogs, setBlogs] = useState([]);
-	const [newBlog, setNewBlog] = useState("");
-	const [errorMessage, setErrorMessage] = useState(null);
+	const [message, setMessage] = useState(null);
+	const [error, setError] = useState(false);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [newTitle, setTitle] = useState("");
@@ -44,10 +45,10 @@ const App = () => {
 			setUsername("");
 			setPassword("");
 		} catch (exception) {
-			console.log("Wrong credentials");
-			setErrorMessage("Wrong credentials");
+			setError(true);
+			setMessage("Wrong credentials");
 			setTimeout(() => {
-				setErrorMessage(null);
+				setMessage(null);
 			}, 5000);
 		}
 	};
@@ -119,7 +120,18 @@ const App = () => {
 
 		blogService.create(blogObject).then((returnedBlog) => {
 			setBlogs(blogs.concat(returnedBlog));
-			setNewBlog("");
+
+			setTitle("");
+			setAuthor("");
+			setUrl("");
+
+			setError(false);
+			setMessage(
+				`a new blog ${blogObject.title} by ${blogObject.author} added`
+			);
+			setTimeout(() => {
+				setMessage(null);
+			}, 5000);
 		});
 	};
 
@@ -132,6 +144,8 @@ const App = () => {
 	return (
 		<div>
 			<h2>blogs</h2>
+
+			<Notification message={message} err={error} />
 
 			{user === null ? (
 				loginForm()
