@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs 
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI1ZjdiNjQ0ZjZiYzJmNjQwYjMwMzcwNjQiLCJpYXQiOjE2MDE5MjgwNDZ9.fwCDkoNmBnpl1a0dAiFtmpaK3U-UOVsGJYNX_thFXik
+
+{
+    "title": "4 factors that could help Heat upset Lakers75",
+    "author": "Sekou Smith",
+    "url": "https://www.nba.com/article/2020/09/29/4-factors-how-heat-can-upset-lakers",
+    "userId": "5f7b6cbde09c2b4583804055"
+}
