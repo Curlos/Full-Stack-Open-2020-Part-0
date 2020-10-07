@@ -91,6 +91,8 @@ const App = () => {
 		</Togglable>
 	);
 
+	blogs.sort((a, b) => (a.likes > b.likes ? -1 : 1));
+
 	return (
 		<div>
 			<h2>blogs</h2>
