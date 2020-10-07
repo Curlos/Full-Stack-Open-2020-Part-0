@@ -110,7 +110,7 @@ const App = () => {
 				</div>
 			)}
 
-			{user !== null && blogs.map((blog) => <Blog key={blog.id} blog={blog} />)}
+			{user !== null && blogs.map((blog) => <Blog key={blog.id} blog={blog} user={user} />)}
 		</div>
 	);
 };

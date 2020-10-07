@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import blogService from "../services/blogs";
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, user }) => {
 	const [visible, setVisible] = useState(false);
 	const [likes, setLikes] = useState(blog.likes);
 
@@ -42,7 +42,9 @@ const Blog = ({ blog }) => {
 		if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
 			try {
 				const deletedBlog = await blogService.deleteBlog(blog.id);
-			} catch (exception) {}
+			} catch (exception) {
+				console.log(exception);
+			}
 		}
 	};
 
@@ -61,7 +63,12 @@ const Blog = ({ blog }) => {
 					</button>
 				</p>
 				<p>{blog.author}</p>
-				<button onClick={removeBlog}>remove</button>
+				{user.username === blog.user.username &&
+				user.name === blog.user.name ? (
+					<button onClick={removeBlog}>remove</button>
+				) : (
+					""
+				)}
 			</div>
 		</div>
 	);
