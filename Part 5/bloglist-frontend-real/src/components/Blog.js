@@ -25,7 +25,7 @@ const Blog = ({ blog }) => {
 	};
 
 	const incrementLikes = async () => {
-		const changedBlog = { ...blog, likes: blog.likes + 1 };
+		const changedBlog = { ...blog, likes: likes + 1 };
 
 		try {
 			const returnedBlog = await blogService.incrementLikes(
