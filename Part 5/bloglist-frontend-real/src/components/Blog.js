@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import blogService from "../services/blogs";
 
 const Blog = ({ blog }) => {
@@ -38,6 +38,14 @@ const Blog = ({ blog }) => {
 		}
 	};
 
+	const removeBlog = async () => {
+		if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+			try {
+				const deletedBlog = await blogService.deleteBlog(blog.id);
+			} catch (exception) {}
+		}
+	};
+
 	return (
 		<div style={blogStyle}>
 			{blog.title} {blog.author}
@@ -53,6 +61,7 @@ const Blog = ({ blog }) => {
 					</button>
 				</p>
 				<p>{blog.author}</p>
+				<button onClick={removeBlog}>remove</button>
 			</div>
 		</div>
 	);

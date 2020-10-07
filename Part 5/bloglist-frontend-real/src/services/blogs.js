@@ -26,4 +26,9 @@ const incrementLikes = async (id, newObject) => {
 	return response.data;
 };
 
-export default { setToken, getAll, create, incrementLikes };
+const deleteBlog = async (id) => {
+	const response = await axios.delete(`${baseUrl}/${id}`);
+	return response.data;
+};
+
+export default { setToken, getAll, create, incrementLikes, deleteBlog };
