@@ -59,7 +59,11 @@ const Blog = ({ blog, user }) => {
 				<p>{blog.url}</p>
 				<p>
 					likes {likes}
-					<button style={buttonStyle} onClick={incrementLikes}>
+					<button
+						style={buttonStyle}
+						onClick={incrementLikes}
+						className="likeButton"
+					>
 						like
 					</button>
 				</p>
