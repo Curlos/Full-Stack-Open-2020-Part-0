@@ -48,17 +48,24 @@ const Blog = ({ blog, user }) => {
 	console.log(blog);
 
 	return (
-		<div style={blogStyle}>
+		<div style={blogStyle} className="blog">
 			<div className="authorAndTitle">
 				{blog.title} {blog.author}
-				<button className="view-button" onClick={toggleVisibility} style={buttonStyle}>
+				<button
+					className="view-button"
+					onClick={toggleVisibility}
+					style={buttonStyle}
+				>
 					{visible === false ? "view" : "hide"}
 				</button>
 			</div>
 			<div style={showWhenVisible} className="likesAndUrl">
 				<p>{blog.url}</p>
 				<p>
-					likes {likes}
+					likes{" "}
+					<span className="likes-blog" value={likes}>
+						{likes}
+					</span>
 					<button
 						style={buttonStyle}
 						onClick={incrementLikes}
