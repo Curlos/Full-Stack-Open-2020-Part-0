@@ -68,26 +68,23 @@ describe("Blog app", function () {
 				});
 			});
 
-			it.only("if a blog can be liked", function () {
+			it("if a blog can be liked", function () {
 				cy.contains("another blog cypress");
 
 				cy.get(".view-button").click();
 				cy.get(".likeButton").click();
 				cy.contains("likes 1");
 			});
-		});
 
-		describe("and several notes exist", function () {
-			beforeEach(function () {
-				cy.createNote({ content: "first note", important: false });
-				cy.createNote({ content: "second note", important: false });
-				cy.createNote({ content: "third note", important: false });
-			});
-
-			it("one of those can be made important", function () {
-				cy.contains("second note").contains("make important").click();
-
-				cy.contains("second note").contains("make not important");
+			it.only("if a blog can be deleted", function () {
+				cy.contains("another blog cypress");
+				cy.get(".view-button").click();
+				cy.contains("remove")
+					.click()
+					.then(function () {
+						cy.reload(true);
+						cy.get("html").should("not.contain", "another blog cypress");
+					});
 			});
 		});
 	});
