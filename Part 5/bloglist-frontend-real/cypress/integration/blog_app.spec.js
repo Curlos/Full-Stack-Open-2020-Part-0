@@ -68,8 +68,12 @@ describe("Blog app", function () {
 				});
 			});
 
-			it.only("it can be made important", function () {
+			it.only("if a blog can be liked", function () {
 				cy.contains("another blog cypress");
+
+				cy.get(".view-button").click();
+				cy.get(".likeButton").click();
+				cy.contains("likes 1");
 			});
 		});
 
