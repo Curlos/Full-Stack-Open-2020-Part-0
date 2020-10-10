@@ -80,5 +80,37 @@ describe("Note app", function () {
 				cy.contains("second note").contains("make not important");
 			});
 		});
+
+		describe("and a blog exists", function () {
+			beforeEach(function () {
+				cy.createBlog({
+					title: "another blog can be created",
+					url: "http://reddit.com",
+					author: "Author23",
+				});
+			});
+
+			it("it can be made important", function () {
+				cy.contains("another note cypress");
+
+				cy.contains("make important").click();
+
+				cy.contains("another note cypress").contains("make not important");
+			});
+		});
+
+		describe("and several notes exist", function () {
+			beforeEach(function () {
+				cy.createNote({ content: "first note", important: false });
+				cy.createNote({ content: "second note", important: false });
+				cy.createNote({ content: "third note", important: false });
+			});
+
+			it("one of those can be made important", function () {
+				cy.contains("second note").contains("make important").click();
+
+				cy.contains("second note").contains("make not important");
+			});
+		});
 	});
 });
