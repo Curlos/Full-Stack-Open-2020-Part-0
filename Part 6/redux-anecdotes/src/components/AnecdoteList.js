@@ -29,7 +29,7 @@ const AnecdoteList = () => {
             anecdote={anecdote}
             key={anecdote.id} 
             handleClick={() => {
-              dispatch(incrementVotes(anecdote.id))
+              dispatch(incrementVotes(anecdote))
               dispatch(notificationVote(anecdote.content))
               setTimeout(() => dispatch(emptyNotification()), 5000)
             }}
