@@ -2,10 +2,8 @@ const initialState = 'initial notification'
 
 const notificationReducer = (state = initialState, action) => {
     switch (action.type) {
-      case 'VOTE':
-        return `you voted '${action.anecdote}'`
-      case 'ADD':
-        return `you added '${action.anecdote}'`
+      case 'SET':
+        return action.message
       case 'EMPTY':
         return null
       default:
@@ -25,6 +23,19 @@ const notificationReducer = (state = initialState, action) => {
     return {
       type: 'ADD',
       anecdote,
+    }
+  }
+
+  export const setNotification = (message, time = 5) => {
+    return async dispatch => {
+      setTimeout(() => {
+        dispatch(emptyNotification())
+      }, time * 1000)
+      dispatch({
+        type: 'SET',
+        message,
+        time
+      })
     }
   }
 
