@@ -19,7 +19,8 @@ const Anecdote = ({ anecdote, handleClick }) => {
 
 const AnecdoteList = () => {
   const dispatch = useDispatch()
-  const anecdotes = useSelector(state => state.anecdotes)
+  const anecdotes = useSelector(({anecdotes, notifications}) => anecdotes)
+  console.log(anecdotes)
 
   return(
     <div>
