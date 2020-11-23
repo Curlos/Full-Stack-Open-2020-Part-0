@@ -8,10 +8,10 @@ import { useDispatch } from 'react-redux'
 
 const App = () => {
   const dispatch = useDispatch()
+
   useEffect(() => {
-    noteService
-      .getAll().then(notes => dispatch(initializeNotes(notes)))   
-  },[]) // eslint-disable-line react-hooks/exhaustive-deps  
+    dispatch(initializeNotes()) 
+  },[dispatch]) 
 
   return (
     <div>
