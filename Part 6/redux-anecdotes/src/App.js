@@ -7,6 +7,8 @@ const App = () => {
   const anecdotes = useSelector(state => state)
   const dispatch = useDispatch()
 
+  anecdotes.sort((a, b) => (b.votes > a.votes) ? 1 : -1)
+
   return (
     <div>
       <h2>Anecdotes</h2>
