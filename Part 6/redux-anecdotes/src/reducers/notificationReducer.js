@@ -1,6 +1,4 @@
-const initialState = 'initial notification'
-
-const notificationReducer = (state = initialState, action) => {
+const notificationReducer = (state = '', action) => {
     switch (action.type) {
       case 'SET':
         return action.message

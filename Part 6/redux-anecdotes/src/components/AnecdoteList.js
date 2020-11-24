@@ -21,14 +21,21 @@ const AnecdoteList = (props) => {
   return(
     <div>
         {props.anecdotes.map(anecdote =>
-            <Anecdote 
-            anecdote={anecdote}
-            key={anecdote.id} 
-            handleClick={() => {
-              props.incrementVotes(anecdote)
-              props.setNotification(`you voted '${anecdote.content}'`)
-            }}
-            />
+            {
+              if(anecdote.content.includes(props.filter)) {
+                return (
+                  <Anecdote 
+                  anecdote={anecdote}
+                  key={anecdote.id} 
+                  handleClick={() => {
+                    props.incrementVotes(anecdote)
+                    props.setNotification(`you voted '${anecdote.content}'`)
+                  }}
+                  />
+                )
+              }
+              return null
+            }
       )}
     </div>
   )
@@ -36,7 +43,8 @@ const AnecdoteList = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    anecdotes: state.anecdotes
+    anecdotes: state.anecdotes,
+    filter: state.filter,
   }
 }
 

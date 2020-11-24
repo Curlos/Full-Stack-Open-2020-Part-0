@@ -3,11 +3,11 @@ const filterReducer = (state = '', action) => {
       case 'SET_FILTER':
         return action.filter
       default:
-        return stateß
+        return state
     }
   }
   
-  export const filterChange = (filter) => {
+  export const setFilter = (filter) => {
     return {
       type: 'SET_FILTER',
       filter,
