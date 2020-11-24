@@ -9,6 +9,15 @@ import {
   useHistory,
 } from "react-router-dom"
 
+
+const Notification = ({notification}) => {
+  return (
+    <div>
+      {notification}
+    </div>
+  )
+}
+
 const Anecdote = ({ anecdote }) => {
   const padding = {
     "padding-bottom": 15
@@ -27,6 +36,7 @@ const Anecdote = ({ anecdote }) => {
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
+    <Notification />
     <h2>Anecdotes</h2>
     <ul>
       {anecdotes.map(anecdote => 
@@ -65,6 +75,8 @@ const CreateNew = (props) => {
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
 
+  const history = useHistory()
+
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -74,6 +86,8 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+    
+    history.push('/anecdotes')
   }
 
   return (
@@ -122,6 +136,8 @@ const App = () => {
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
+    setNotification(`a new anecdote ${anecdote.content} created!`)
+    setTimeout(() => setNotification(''), 10000);
   }
 
   const anecdoteById = (id) =>
@@ -157,10 +173,13 @@ const App = () => {
         <Link to="/" style={padding}>about</Link>
       </div>
 
+      <Notification notification={notification} />
+
       <Switch>
         <Route path="/anecdotes/:id">
           <Anecdote anecdote={anecdote} />
         </Route>
+
         <Route path="/anecdotes">
           <AnecdoteList anecdotes={anecdotes} />
         </Route>
