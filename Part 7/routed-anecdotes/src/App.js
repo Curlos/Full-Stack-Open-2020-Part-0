@@ -21,7 +21,7 @@ const Notification = ({notification}) => {
 
 const Anecdote = ({ anecdote }) => {
   const padding = {
-    "padding-bottom": 15
+    "paddingBottom": 15
   }
   
   return (
@@ -98,21 +98,31 @@ const CreateNew = (props) => {
     info.reset()
   }
 
+  const excludeResetProp = (props) => {
+    const {reset, ...otherProps} = props
+
+    return otherProps
+  }
+
+  const contentProps = excludeResetProp(content)
+  const authorProps = excludeResetProp(author)
+  const infoProps = excludeResetProp(info)
+
   return (
     <div>
       <h2>create a new anecdote</h2>
       <form>
         <div>
           content
-          <input name='content' value={content.value} onChange={content.onChange} />
+          <input {...contentProps}/>
         </div>
         <div>
           author
-          <input name='author' value={author.value} onChange={author.onChange} />
+          <input {...authorProps}/>
         </div>
         <div>
           url for more info
-          <input name='info' value={info.value} onChange={info.onChange} />
+          <input {...infoProps}/>
         </div>
         <button onClick={handleSubmit}>create</button> <button onClick={handleResetAll}>reset</button>
       </form>
