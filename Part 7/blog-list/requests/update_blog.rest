@@ -1,0 +1,9 @@
+PUT http://localhost:3003/api/blogs/5f73d9c67db76c009eba7ba5 
+Content-Type: application/json
+
+{
+    "title": "4 factors that could help Heat upset Lakers",
+    "author": "Sekou Smith",
+    "url": "https://www.nba.com/article/2020/09/29/4-factors-how-heat-can-upset-lakers",
+    "likes": 23
+}
