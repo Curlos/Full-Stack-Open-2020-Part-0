@@ -7,6 +7,9 @@ import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
+import {useDispatch} from 'react-redux'
+import {setNotification} from './reducers/notificationReducer'
+
 const App = () => {
     const [blogs, setBlogs] = useState([])
     const [message, setMessage] = useState(null)
@@ -14,6 +17,8 @@ const App = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         blogService.getAll().then((blogs) => setBlogs(blogs))
@@ -42,14 +47,11 @@ const App = () => {
             blogService.setToken(user.token)
 
             setUser(user)
+            dispatch(setNotification(`${user.name} has logged in`, 5, false))
             setUsername('')
             setPassword('')
         } catch (exception) {
-            setError(true)
-            setMessage('Wrong credentials')
-            setTimeout(() => {
-                setMessage(null)
-            }, 5000)
+            dispatch(setNotification('Wrong credentials', 5, true))
         }
     }
 
@@ -76,12 +78,7 @@ const App = () => {
             setBlogs(blogs.concat(returnedBlog))
 
             setError(false)
-            setMessage(
-                `a new blog ${blogObject.title} by ${blogObject.author} added`
-            )
-            setTimeout(() => {
-                setMessage(null)
-            }, 5000)
+            
         })
     }
 

@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux'
+import { setNotification } from '../reducers/notificationReducer'
 import PropTypes from "prop-types";
 
 const BlogForm = ({ createBlog }) => {
 	const [newTitle, setTitle] = useState("");
 	const [newAuthor, setAuthor] = useState("");
 	const [newUrl, setUrl] = useState("");
+
+	const dispatch = useDispatch()
 
 	const addBlog = (event) => {
 		event.preventDefault();
@@ -17,6 +21,8 @@ const BlogForm = ({ createBlog }) => {
 		setTitle("");
 		setAuthor("");
 		setUrl("");
+
+		dispatch(setNotification(`a new blog ${newTitle} by ${newAuthor} added`, 5, false))
 	};
 
 	return (
