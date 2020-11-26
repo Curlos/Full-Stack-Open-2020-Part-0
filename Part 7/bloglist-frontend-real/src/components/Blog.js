@@ -1,49 +1,43 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import blogService from "../services/blogs";
+import {incrementLikes, deleteBlog} from '../reducers/blogReducer'
+import { setNotification, emptyNotification } from '../reducers/notificationReducer'
 import PropTypes from "prop-types";
 
-const Blog = ({ blog, user, handleClickLike, handleClickDelete }) => {
+
+const Blog = ({ blog }) => {
 	const [visible, setVisible] = useState(false);
 	const dispatch = useDispatch()
 
-	const showWhenVisible = { display: visible ? "" : "none" };
+	if(!blog) {
+		return null
+	}
 
-	const toggleVisibility = () => {
-		setVisible(!visible);
-	};
+	const handleClickLike = () => {
+		dispatch(incrementLikes(blog))
+	}
 
-	const blogStyle = {
-		paddingTop: 10,
-		paddingLeft: 2,
-		border: "solid",
-		borderWidth: 1,
-		marginBottom: 5,
-	};
+	const handleClickDelete = () => {
+		dispatch(deleteBlog(blog))
+		dispatch(setNotification(`'${blog.title}' by ${blog.author} has been removed`, 5, false))
+	  }
 
 	const buttonStyle = {
 		margin: "6px",
 	};
 
 	return (
-		<div style={blogStyle} className="blog">
+		<div className="blog">
 			<div className="authorAndTitle">
-				{blog.title} {blog.author}
-				<button
-					className="view-button"
-					onClick={toggleVisibility}
-					style={buttonStyle}
-				>
-					{visible === false ? "view" : "hide"}
-				</button>
+				<h2>{blog.title}</h2>
 			</div>
-			<div style={showWhenVisible} className="likesAndUrl">
-				<p>{blog.url}</p>
+			<div className="likesAndUrl">
+				<a href={blog.url} target="_blank">{blog.url}</a>
 				<p>
-					likes{" "}
 					<span className="likes-blog" value={blog.likes}>
-						{blog.likes}
+						{blog.likes} likes
 					</span>
+					
 					<button
 						style={buttonStyle}
 						onClick={handleClickLike}
@@ -52,9 +46,9 @@ const Blog = ({ blog, user, handleClickLike, handleClickDelete }) => {
 						like
 					</button>
 				</p>
-				<p>{blog.author}</p>
-				{user.username === blog.user.username &&
-				user.name === blog.user.name ? (
+				<p>added by {blog.author}</p>
+				{blog.user.username === blog.user.username &&
+				blog.user.name === blog.user.name ? (
 					<button onClick={handleClickDelete}>remove</button>
 				) : (
 					""

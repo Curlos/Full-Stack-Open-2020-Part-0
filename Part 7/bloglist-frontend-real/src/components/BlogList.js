@@ -1,9 +1,24 @@
 import React from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useRouteMatch,
+  useHistory,
+} from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
-import {incrementLikes, deleteBlog} from '../reducers/blogReducer'
-import { setNotification, emptyNotification } from '../reducers/notificationReducer'
 
 import Blog from './Blog'
+
+const blogStyle = {
+  paddingTop: 10,
+  paddingLeft: 2,
+  border: "solid",
+  borderWidth: 1,
+  marginBottom: 5,
+};
 
 const BlogList = () => {
     const dispatch = useDispatch()
@@ -13,7 +28,17 @@ const BlogList = () => {
     return(
       <div>
           {blogs.map(blog =>
-              <Blog 
+              <div style={blogStyle}>
+                <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+              </div>
+              
+        )}
+      </div>
+    )
+  }
+
+  /*
+  <Blog 
               key={blog.id} 
               blog={blog} 
               user={blog.user} 
@@ -24,9 +49,6 @@ const BlogList = () => {
                 dispatch(deleteBlog(blog))
                 dispatch(setNotification(`'${blog.title}' by ${blog.author} has been removed`, 5, false))
               }}/>
-        )}
-      </div>
-    )
-  }
+              */
   
   export default BlogList

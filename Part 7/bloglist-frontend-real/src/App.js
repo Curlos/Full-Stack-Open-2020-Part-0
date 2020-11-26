@@ -98,15 +98,14 @@ const App = () => {
 
     blogs.sort((a, b) => (a.likes > b.likes ? -1 : 1))
 
-    const match = useRouteMatch('/users/:id')
-    const urlUser = match 
-    ? users.find(user => {
-        
-        console.log(`User ID: ${user.id} === Match ID: ${match.params.id}`, Number(user.id) === Number(match.params.id))
-        return (
-            user.id === match.params.id
-        )
-    })
+    const userMatch = useRouteMatch('/users/:id')
+    const urlUser = userMatch 
+    ? users.find(user => user.id === userMatch.params.id)
+    : null
+
+    const blogMatch = useRouteMatch('/blogs/:id')
+    const urlBlog = blogMatch 
+    ? blogs.find(blog => blog.id === blogMatch.params.id)
     : null
 
     return (
@@ -122,7 +121,6 @@ const App = () => {
                     <p>
                         {user.name} logged-in <button onClick={handleLogout}>logout</button>{' '}
                     </p>
-                    {blogForm()}
                 </div>
             )}
 
@@ -134,7 +132,11 @@ const App = () => {
                     <h2>Users</h2>
                     <UserList />
                 </Route>
+                <Route path="/blogs/:id">
+                    <Blog blog={urlBlog} />
+                </Route>
                 <Route path="/">
+                    {blogForm()}
                     {user !== null && <BlogList />}
                 </Route>
                 
