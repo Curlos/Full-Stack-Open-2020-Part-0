@@ -5,7 +5,7 @@ const User = ({user}) => {
   return (
     <div>
       <div>
-        {user.name} {user.blogs.length}
+        {user.name}, blogs created: {user.blogs.length}
       </div>
     </div>
   )

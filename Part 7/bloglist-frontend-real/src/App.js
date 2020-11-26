@@ -1,4 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect,
+    useRouteMatch,
+    useHistory,
+  } from "react-router-dom"
+
 import Blog from './components/Blog'
 import BlogList from './components/BlogList'
 import UserList from './components/UserList'
@@ -103,8 +113,17 @@ const App = () => {
                 </div>
             )}
 
-            {user !== null && <BlogList />}
-            {<UserList />}
+            <Switch>
+                
+                <Route path="/users">
+                    <h2>Users</h2>
+                    <UserList />
+                </Route>
+                <Route path="/">
+                    {user !== null && <BlogList />}
+                </Route>
+                
+            </Switch>
         </div>
     )
 }
