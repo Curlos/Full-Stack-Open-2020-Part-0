@@ -110,8 +110,6 @@ const App = () => {
 
     return (
         <div>
-            <h2>blogs</h2>
-
             <Notification />
 
             {user === null ? (
@@ -119,10 +117,15 @@ const App = () => {
             ) : (
                 <div>
                     <p>
+                        
+                        <Link to="/blogs" style={{padding: 5}}>blogs</Link>
+                        <Link to="/users" style={{padding: 5}}>users</Link>
                         {user.name} logged-in <button onClick={handleLogout}>logout</button>{' '}
                     </p>
                 </div>
             )}
+
+            <h2>blog app</h2>
 
             <Switch>
                 <Route path="/users/:id">
