@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import {incrementLikes, deleteBlog} from '../reducers/blogReducer'
 import { setNotification, emptyNotification } from '../reducers/notificationReducer'
+import {Button} from 'react-bootstrap'
 import PropTypes from "prop-types";
 
 
@@ -38,18 +39,18 @@ const Blog = ({ blog }) => {
 						{blog.likes} likes
 					</span>
 					
-					<button
+					<Button
 						style={buttonStyle}
 						onClick={handleClickLike}
 						className="likeButton"
 					>
 						like
-					</button>
+					</Button>
 				</p>
 				<p>added by {blog.author}</p>
 				{blog.user.username === blog.user.username &&
 				blog.user.name === blog.user.name ? (
-					<button onClick={handleClickDelete}>remove</button>
+					<Button onClick={handleClickDelete}>remove</Button>
 				) : (
 					""
 				)}

@@ -25,6 +25,8 @@ import {initializeBlogs} from './reducers/blogReducer'
 import {initializeUsers} from './reducers/userReducer'
 import {setNotification} from './reducers/notificationReducer'
 
+import {Navbar, Nav, Button} from 'react-bootstrap'
+
 const App = () => {
     
     const [username, setUsername] = useState('')
@@ -79,7 +81,7 @@ const App = () => {
     }
 
     const loginForm = () => (
-        <Togglable buttonLabel="login">
+        <Togglable buttonLabel="Login">
             <LoginForm
                 username={username}
                 password={password}
@@ -91,8 +93,8 @@ const App = () => {
     )
 
     const blogForm = () => (
-        <Togglable buttonLabel="new blog">
-            <BlogForm />
+        <Togglable buttonLabel="Create">
+            <BlogForm buttonLabel="Create"/>
         </Togglable>
     )
 
@@ -108,44 +110,56 @@ const App = () => {
     ? blogs.find(blog => blog.id === blogMatch.params.id)
     : null
 
+    const padding = {
+        padding: 5
+    }
+
     return (
         <div>
             <Notification />
 
-            {user === null ? (
-                loginForm()
-            ) : (
+            {user === null ? <h2>Blog App</h2> && loginForm() : (
                 <div>
-                    <p>
+                    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="mr-auto">
+                            <Nav.Link href="#" as="span">
+                                <Link style={padding} to="/blogs">Blogs</Link>
+                            </Nav.Link>
+                            <Nav.Link href="#" as="span">
+                                <Link style={padding} to="/users">Users</Link>
+                            </Nav.Link>
+                            <Nav.Link href="#" as="span">
+                                <span>{user.name} logged-in <Button onClick={handleLogout} className="navLink">logout</Button>{' '}</span>
+                            </Nav.Link>
+                        </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
+
+                    <Switch>
+                        <Route path="/users/:id">
+                            <User user={urlUser} />
+                        </Route>
+                        <Route path="/users">
+                            <h2>Users</h2>
+                            <UserList />
+                        </Route>
+                        <Route path="/blogs/:id">
+                            <Blog blog={urlBlog} />
+                        </Route>
+                        <Route path="/">
+                            <h2>Blogs</h2>
+                            {blogForm()}
+                            {user !== null && <BlogList />}
+                        </Route>
                         
-                        <Link to="/blogs" style={{padding: 5}}>blogs</Link>
-                        <Link to="/users" style={{padding: 5}}>users</Link>
-                        {user.name} logged-in <button onClick={handleLogout}>logout</button>{' '}
-                    </p>
+                    </Switch>
                 </div>
             )}
-
-            <h2>blog app</h2>
-
-            <Switch>
-                <Route path="/users/:id">
-                    <User user={urlUser} />
-                </Route>
-                <Route path="/users">
-                    <h2>Users</h2>
-                    <UserList />
-                </Route>
-                <Route path="/blogs/:id">
-                    <Blog blog={urlBlog} />
-                </Route>
-                <Route path="/">
-                    {blogForm()}
-                    {user !== null && <BlogList />}
-                </Route>
-                
-            </Switch>
         </div>
     )
 }
 
 export default App
+

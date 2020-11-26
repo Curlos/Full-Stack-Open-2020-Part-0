@@ -1,5 +1,6 @@
 import React from "react";
 import { setNotification } from '../reducers/notificationReducer'
+import {Button} from 'react-bootstrap'
 import PropTypes from "prop-types";
 
 const LoginForm = ({
@@ -31,9 +32,9 @@ const LoginForm = ({
 						onChange={handlePasswordChange}
 					/>
 				</div>
-				<button id="login-button" type="submit">
+				<Button id="login-button" type="submit">
 					login
-				</button>
+				</Button>
 			</form>
 		</div>
 	);

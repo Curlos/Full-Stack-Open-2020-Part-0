@@ -9,16 +9,7 @@ import {
   useHistory,
 } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
-
-import Blog from './Blog'
-
-const blogStyle = {
-  paddingTop: 10,
-  paddingLeft: 2,
-  border: "solid",
-  borderWidth: 1,
-  marginBottom: 5,
-};
+import {ListGroup} from 'react-bootstrap'
 
 const BlogList = () => {
     const dispatch = useDispatch()
@@ -27,28 +18,18 @@ const BlogList = () => {
   
     return(
       <div>
+        <ListGroup>
           {blogs.map(blog =>
-              <div style={blogStyle}>
-                <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
-              </div>
-              
-        )}
+                <div>
+                  <ListGroup.Item className="listGroupItem">
+                    <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+                  </ListGroup.Item>
+                </div>
+                
+          )}
+        </ListGroup>
       </div>
     )
   }
-
-  /*
-  <Blog 
-              key={blog.id} 
-              blog={blog} 
-              user={blog.user} 
-              handleClickLike={() => {
-                dispatch(incrementLikes(blog))
-              }} 
-              handleClickDelete={() => {
-                dispatch(deleteBlog(blog))
-                dispatch(setNotification(`'${blog.title}' by ${blog.author} has been removed`, 5, false))
-              }}/>
-              */
   
   export default BlogList

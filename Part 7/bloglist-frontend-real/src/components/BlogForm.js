@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
-import PropTypes from "prop-types";
+import {Form, Row, Col, Button} from 'react-bootstrap'
 
-const BlogForm = () => {
+const BlogForm = (props) => {
 	const [newTitle, setTitle] = useState("");
 	const [newAuthor, setAuthor] = useState("");
 	const [newUrl, setUrl] = useState("");
@@ -31,47 +31,54 @@ const BlogForm = () => {
 		<div>
 			<h2>Create a new blog</h2>
 
-			<form onSubmit={addBlog}>
-				<div>
-					title
-					<input
-						type="text"
-						value={newTitle}
-						name="Title"
-						onChange={({ target }) => setTitle(target.value)}
-						className="titleInput"
-					/>
-				</div>
-				<div>
-					author
-					<input
-						type="text"
-						value={newAuthor}
-						name="Author"
-						onChange={({ target }) => setAuthor(target.value)}
-						className="authorInput"
-					/>
-				</div>
-				<div>
-					url
-					<input
-						type="text"
-						value={newUrl}
-						name="Url"
-						onChange={({ target }) => setUrl(target.value)}
-						className="urlInput"
-					/>
-				</div>
-				<button className="create-button" type="submit">
-					create
-				</button>
-			</form>
+			<Form>
+				<Form.Group as={Row} controlId="formHorizontalTitle">
+					<Form.Label column sm={1}>
+					Title
+					</Form.Label>
+					<Col sm={5}>
+						<Form.Control 
+							type="email" 
+							placeholder="Email" 
+							onChange={({ target }) => setTitle(target.value)}
+							/>
+					</Col>
+				</Form.Group>
+
+				<Form.Group as={Row} controlId="formHorizontalAuthor">
+					<Form.Label column sm={1}>
+					Author
+					</Form.Label>
+					<Col sm={5}>
+						<Form.Control 
+							type="password" 
+							placeholder="Password" 
+							onChange={({ target }) => setAuthor(target.value)}
+							/>
+					</Col>
+				</Form.Group>
+
+				<Form.Group as={Row} controlId="formHorizontalUrl">
+					<Form.Label column sm={1}>
+					Url
+					</Form.Label>
+					<Col sm={5}>
+						<Form.Control 
+							type="password" 
+							placeholder="Password" 
+							onChange={({ target }) => setUrl(target.value)}/>
+					</Col>
+				</Form.Group>
+
+				<Form.Group as={Row}>
+					<Col sm={5}>
+					<Button type="submit" onClick={addBlog}>{props.buttonLabel}</Button>
+					</Col>
+				</Form.Group>
+			</Form>
 		</div>
 	);
 };
 
-BlogForm.propTypes = {
-	createBlog: PropTypes.func.isRequired,
-};
 
 export default BlogForm;

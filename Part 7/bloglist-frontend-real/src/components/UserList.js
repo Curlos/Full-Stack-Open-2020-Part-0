@@ -9,6 +9,7 @@ import {
   useHistory,
 } from "react-router-dom"
 import { useSelector } from 'react-redux'
+import {ListGroup} from 'react-bootstrap'
 
 const UserList = () => {
     const users = useSelector(state => state.users)
@@ -16,11 +17,16 @@ const UserList = () => {
   
     return(
       <div>
+        <ListGroup>
           {users.map(user =>
-              <div>
-                <Link to={`/users/${user.id}`}>{user.name}</Link>, blogs created: {user.blogs.length}
-              </div>
-        )}
+                <div>
+                  <ListGroup.Item className="listGroupItem">
+                    <Link to={`/users/${user.id}`}>{user.name}</Link>, blogs created: {user.blogs.length}
+                  </ListGroup.Item>
+                  
+                </div>
+          )}
+        </ListGroup>
       </div>
     )
   }
