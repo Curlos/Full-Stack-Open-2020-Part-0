@@ -11,6 +11,7 @@ import {
 
 import Blog from './components/Blog'
 import BlogList from './components/BlogList'
+import User from './components/User'
 import UserList from './components/UserList'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
@@ -38,6 +39,7 @@ const App = () => {
     }, [dispatch])
 
     const blogs = useSelector(state => state.blogs)
+    const users = useSelector(state => state.users)
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
@@ -96,6 +98,17 @@ const App = () => {
 
     blogs.sort((a, b) => (a.likes > b.likes ? -1 : 1))
 
+    const match = useRouteMatch('/users/:id')
+    const urlUser = match 
+    ? users.find(user => {
+        
+        console.log(`User ID: ${user.id} === Match ID: ${match.params.id}`, Number(user.id) === Number(match.params.id))
+        return (
+            user.id === match.params.id
+        )
+    })
+    : null
+
     return (
         <div>
             <h2>blogs</h2>
@@ -114,7 +127,9 @@ const App = () => {
             )}
 
             <Switch>
-                
+                <Route path="/users/:id">
+                    <User user={urlUser} />
+                </Route>
                 <Route path="/users">
                     <h2>Users</h2>
                     <UserList />

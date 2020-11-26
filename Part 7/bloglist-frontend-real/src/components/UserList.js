@@ -1,25 +1,25 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-const User = ({user}) => {
-  return (
-    <div>
-      <div>
-        {user.name}, blogs created: {user.blogs.length}
-      </div>
-    </div>
-  )
-}
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useRouteMatch,
+  useHistory,
+} from "react-router-dom"
+import { useSelector } from 'react-redux'
 
 const UserList = () => {
-    const dispatch = useDispatch()
     const users = useSelector(state => state.users)
     console.log(users)
   
     return(
       <div>
           {users.map(user =>
-              <User user={user} />
+              <div>
+                <Link to={`/users/${user.id}`}>{user.name}</Link>, blogs created: {user.blogs.length}
+              </div>
         )}
       </div>
     )
