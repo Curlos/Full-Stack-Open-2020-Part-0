@@ -1,11 +1,10 @@
   
 import React from 'react'
 
-const Authors = (props) => {
-  if (!props.show) {
+const Authors = ({show, authors}) => {
+  if (!show) {
     return null
   }
-  const authors = []
 
   return (
     <div>
@@ -15,10 +14,10 @@ const Authors = (props) => {
           <tr>
             <th></th>
             <th>
-              born
+              <b>born</b>
             </th>
             <th>
-              books
+              <b>books</b>
             </th>
           </tr>
           {authors.map(a =>
