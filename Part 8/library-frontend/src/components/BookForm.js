@@ -3,12 +3,10 @@ import { useMutation } from '@apollo/client'
 
 import { ALL_BOOKS, CREATE_BOOK } from '../queries'
 
-
-const NewBook = ({ show, setError }) => {
+const BookForm = ({ setError }) => {
   const [title, setTitle] = useState('')
-  const [author, setAuhtor] = useState('')
-  const [published, setPublished] = useState(0)
-  const [genre, setGenre] = useState('')
+  const [author, setAuthor] = useState('')
+  const [published, setPublished] = useState('')
   const [genres, setGenres] = useState([])
 
   const [ createBook ] = useMutation(CREATE_BOOK, {
@@ -18,65 +16,47 @@ const NewBook = ({ show, setError }) => {
     }
   })
 
-  if (!show) {
-    return null
-  }
-
   const submit = async (event) => {
     event.preventDefault()
 
     createBook({
       variables: { title, author, published, genres }
     })
-    
-    console.log('add book...', event)
 
     setTitle('')
+    setAuthor('')
     setPublished('')
-    setAuhtor('')
     setGenres([])
-    setGenre('')
-  }
-
-  const addGenre = () => {
-    setGenres(genres.concat(genre))
-    setGenre('')
   }
 
   return (
     <div>
+      <h2>create new</h2>
       <form onSubmit={submit}>
         <div>
-          title
-          <input
+          title <input
             value={title}
             onChange={({ target }) => setTitle(target.value)}
           />
         </div>
         <div>
-          author
-          <input
+        author <input
             value={author}
-            onChange={({ target }) => setAuhtor(target.value)}
+            onChange={({ target }) => setAuthor(target.value)}
           />
         </div>
         <div>
-          published
-          <input
-            type='number'
-            value={published}
-            onChange={({ target }) => setPublished(Number(target.value))}
+          street <input
+            value={street}
+            onChange={({ target }) => setStreet(target.value)}
           />
         </div>
         <div>
-          <input
+          add genre <input
             value={genre}
-            onChange={({ target }) => setGenre(target.value)}
+            onChange={({ target }) => setGenres(...genres, target.value)}
           />
-          <button onClick={addGenre} type="button">add genre</button>
-        </div>
-        <div>
-          genres: {genres.join(' ')}
+          genres: {genres}
         </div>
         <button type='submit'>create book</button>
       </form>
@@ -84,4 +64,4 @@ const NewBook = ({ show, setError }) => {
   )
 }
 
-export default NewBook
+export default BookForm

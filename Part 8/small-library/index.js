@@ -169,12 +169,20 @@ const resolvers = {
   Author: {
       bookCount: (root) => {
         let bookCount = 0
-        books.find(book => book.author === root.name ? bookCount++ : bookCount)
+        books.map(book => book.author === root.name ? bookCount++ : bookCount)
         return bookCount
       }
   },
   Mutation: {
       addBook: (root, args) => {
+        
+        if(authors.find((a, i) => a.name === args.author)) {
+          console.log('hello mate ', typeof args.author)
+          const book = { ...args, id: uuid()}
+          books = books.concat(book)
+          return book
+        }
+
         const author = {name: args.author, id: uuid()}
         authors = authors.concat(author)
 
