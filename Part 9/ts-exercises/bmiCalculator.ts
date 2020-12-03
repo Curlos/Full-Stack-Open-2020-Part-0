@@ -1,4 +1,4 @@
-const parseArguments = (args: Array<string>): Array<number> => {
+export const parseArguments = (args: Array<string>): Array<number> => {
   if (args.length < 4) throw new Error('Not enough arguments');
   if (args.length > 4) throw new Error('Too many arguments');
 
@@ -10,7 +10,7 @@ const parseArguments = (args: Array<string>): Array<number> => {
 }
 
 
-const calculateBmi = (value1: number, value2: number) : string => {
+export const calculateBmi = (value1: number, value2: number) : string => {
   const height: number = value1;
   const weight: number = value2;
 
@@ -38,6 +38,7 @@ const calculateBmi = (value1: number, value2: number) : string => {
   }
 }
 
+/*
 try {
   let value1, value2;
   [value1, value2] = parseArguments(process.argv);
@@ -45,3 +46,4 @@ try {
 } catch (e) {
   console.log('Error, something bad happened, message: ', e.message);
 }
+*/
