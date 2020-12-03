@@ -15,8 +15,6 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true,
     console.log('error connection to MongoDB:', error.message)
   })
 
-const { v1: uuid } = require('uuid')
-
 let authors = [
   {
     name: 'Robert Martin',
@@ -104,12 +102,12 @@ const typeDefs = gql`
   type Book {
     title: String!
     published: Int!
-    author: Author!
+    author: Author
     genres: [String!]
     id: ID!
   }
   type Author {
-    name: String!
+    name: String
     born: Int
     bookCount: Int!
     id: ID!
@@ -123,7 +121,8 @@ const typeDefs = gql`
   type Mutation {
       addBook(
           title: String!
-          author: String!
+          name: String!
+          born: Int
           published: Int!
           genres: [String!]!
       ): Book
@@ -141,23 +140,11 @@ const resolvers = {
       authorCount: () => Author.collection.countDocuments(),
       allBooks: (root, args) => {
           if(args.author && !args.genre) {
-            const byAuthor = (book) => {
-                return (
-                    args.author === book.author ? book.title : !book
-                )
-              }
-    
-              return books.filter(byAuthor)
+              return Book.find({"author.name": args.author});
           }
 
           if(!args.author && args.genre) {
-            const byGenre = (book) => {
-                return (
-                    book.genres.includes(args.genre) ? book.title && book.author : !book
-                )
-              }
-
-              return books.filter(byGenre)
+              return Book.find({"genres": args.genre});
           }
 
           if(args.author && args.genre) {
@@ -184,24 +171,34 @@ const resolvers = {
   Author: {
       bookCount: (root) => {
         let bookCount = 0
-        books.map(book => book.author === root.name ? bookCount++ : bookCount)
+        Book.find({}).map(book => book.author === root.name ? bookCount++ : bookCount)
         return bookCount
       }
   },
   Mutation: {
-      addBook: (root, args) => {
-        
-        if(authors.find((a, i) => a.name === args.author)) {
-          console.log('hello mate ', typeof args.author)
-          const book = { ...args, id: uuid()}
-          books = books.concat(book)
-          return book
+      addBook: async (root, args) => {
+        const existingAuthor = await Author.findOne({name: args.name})
+        console.log('fuck you nigga')
+        console.log(existingAuthor)
+
+        if(existingAuthor != null) {
+          const book = new Book({
+            title: args.title, 
+            author: existingAuthor, 
+            published: args.published, 
+            genres: args.genres
+          })
+          return book.save()
         }
+        const author = new Author({name: args.name})
+        await author.save()
 
-        const author = {name: args.author, id: uuid()}
-        authors = authors.concat(author)
-
-        const book = new Book({ ...args })
+        const book = new Book({
+          title: args.title, 
+          author: author, 
+          published: args.published, 
+          genres: args.genres
+        })
         return book.save()
       },
       editAuthor: (root, args) => {
