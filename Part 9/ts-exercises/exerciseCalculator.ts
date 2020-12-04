@@ -6,38 +6,40 @@ interface ExerciseValues {
   ratingDescription: string,
   target: number,
   average: number 
-};
+}
 
 const parseArguments2 = (args: Array<string>): Array<number> => {
   if (args.length < 3) throw new Error('Not enough arguments');
-  const [arg1, arg2, ...restOfArgs] = args;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_arg1, _arg2, ...restOfArgs] = args;
+  console.log(`${_arg1} ${_arg2}`);
 
-  return restOfArgs.map((arg, i) => {
+  return restOfArgs.map((arg, _i) => {
     if (isNaN(Number(arg))) {
-      console.log(Number(arg))
-      throw new Error('Provided values were not numebrs!')
-    };
+      console.log(Number(arg));
+      throw new Error('Provided values were not numebrs!');
+    }
     return Number(arg);
   });
-}
+};
 
 
-const calculateExercises = (exercises: Array<number>, targetValue: number): ExerciseValues => {
-  let trainingDays: number = 0;
-  let totalHours: number = 0;
+export const calculateExercises = (exercises: Array<number>, targetValue: number): ExerciseValues => {
+  let trainingDays = 0;
+  let totalHours = 0;
   exercises.map(dailyHours => {
     dailyHours > 0 ? trainingDays++ : trainingDays;
     totalHours += dailyHours;
 
-  })
-  let averageDailyHours: number = totalHours / exercises.length;
-  let rating: number = 0;
-  let ratingDescription: string = '';
+  });
+  const averageDailyHours: number = totalHours / exercises.length;
+  let rating = 0;
+  let ratingDescription = '';
 
   switch(true) {
     case averageDailyHours >= targetValue:
       rating = 3;
-      ratingDescription = 'Great job! Try raising your goal for next week by 10 minutes.'
+      ratingDescription = 'Great job! Try raising your goal for next week by 10 minutes.';
       break;
     case Math.round(averageDailyHours) === targetValue && averageDailyHours < targetValue:
       rating = 2;
@@ -47,7 +49,7 @@ const calculateExercises = (exercises: Array<number>, targetValue: number): Exer
       rating = 1;
       ratingDescription = 'Horrible job mate, try again next week.';
       break;
-  };
+  }
 
   return {
     periodLength: exercises.length,
@@ -60,10 +62,12 @@ const calculateExercises = (exercises: Array<number>, targetValue: number): Exer
   };
 };
 
+
 try {
   const [targetValue, ...dailyHours] = parseArguments2(process.argv);
   
-  console.log(calculateExercises(dailyHours, targetValue))
+  console.log(calculateExercises(dailyHours, targetValue));
 } catch (e) {
   console.log('Error, something bad happened, message: ', e.message);
 }
+

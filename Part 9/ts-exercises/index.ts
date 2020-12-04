@@ -1,7 +1,16 @@
 import express from 'express';
-import {calculateBmi} from './bmiCalculator'
+import bodyParser from 'body-parser';
+import {calculateBmi} from './bmiCalculator';
+import {calculateExercises} from './exerciseCalculator';
+
+type exerciseRequestBody = {
+  "daily_exercises": Array<number>,
+  "target": number
+};
 
 const app = express();
+
+app.use(bodyParser.json());
 
 app.get('/hello', (_req, res) => {
   res.send('Hello Full Stack!');
@@ -22,17 +31,35 @@ app.get('/bmi', (_req, res) => {
           weight: weight,
           height: height,
           bmi: bmi
-        })
+        });
       } else {
         throw new Error("malformatted parameters");
       }
     } catch (e) {
-      res.send({
-        error: e.message
-      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorTyped: { error: string } = {error: e.message};
+      res.send(errorTyped);
     }
   } else {
     res.send('BMI');
+  }
+});
+
+app.post('/exercises', (_req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const exercises: exerciseRequestBody = _req.body;
+  
+  if(exercises) {
+
+    try {
+      res.send(calculateExercises(exercises.daily_exercises, exercises.target));
+    } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorTyped: { error: string } = {error: "malformatted parameters"};
+      res.send(errorTyped);
+    }
+  } else {
+    res.send({error: "parameters missing"});
   }
 });
 

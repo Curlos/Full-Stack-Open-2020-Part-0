@@ -3,11 +3,11 @@ export const parseArguments = (args: Array<string>): Array<number> => {
   if (args.length > 4) throw new Error('Too many arguments');
 
   if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
-    return [Number(args[2]), Number(args[3])]
+    return [Number(args[2]), Number(args[3])];
   } else {
     throw new Error('Provided values were not numbers!');
   }
-}
+};
 
 
 export const calculateBmi = (value1: number, value2: number) : string => {
@@ -36,7 +36,7 @@ export const calculateBmi = (value1: number, value2: number) : string => {
     default:
       throw new Error('BMI is not valid!');
   }
-}
+};
 
 /*
 try {
