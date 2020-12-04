@@ -4,4 +4,15 @@ export type Diagnose = {
   latin?: string;
 }
 
+export type Patient = {
+  id: string;
+  name: string;
+  dateOfBirth: string;
+  ssn?: string;
+  gender: string;
+  occupation: string;
+}
+
 export type NonLatinDiagnose = Omit<Diagnose, 'latin'>;
+
+export type noSsnPatients = Omit<Patient, 'ssn'>;
