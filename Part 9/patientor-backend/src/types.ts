@@ -16,3 +16,5 @@ export type Patient = {
 export type NonLatinDiagnose = Omit<Diagnose, 'latin'>;
 
 export type noSsnPatients = Omit<Patient, 'ssn'>;
+
+export type NewPatient = Omit<Patient, 'id'>;

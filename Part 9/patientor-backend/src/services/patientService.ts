@@ -1,5 +1,5 @@
 import patients from '../../data/patients';
-import { noSsnPatients, Patient } from '../types';
+import { noSsnPatients, Patient, NewPatient } from '../types';
 
 
 const getPatients = (): Array<Patient> => {
@@ -16,8 +16,14 @@ const getNoSsnPatients = (): noSsnPatients[] => {
   }));
 };
 
-const addPatient = () => {
-  return null;
+const addPatient = ( patient: NewPatient ): Patient => {
+  const newPatient = {
+    id: String(Math.max(...patients.map(p => Number(p.id))) + 1), 
+      ...patient
+  };
+
+  patients.push(newPatient);
+  return newPatient;
 };
 
 export default {
