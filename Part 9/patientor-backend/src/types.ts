@@ -13,6 +13,12 @@ export type Patient = {
   occupation: string;
 }
 
+export enum Gender {
+  Male = 'male',
+  Female = 'female',
+  Other = 'other',
+}
+
 export type NonLatinDiagnose = Omit<Diagnose, 'latin'>;
 
 export type noSsnPatients = Omit<Patient, 'ssn'>;
