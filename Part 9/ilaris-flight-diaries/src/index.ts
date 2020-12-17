@@ -1,7 +1,9 @@
 import express from 'express';
 import diaryRouter from './routes/diaries';
+import bodyParser from 'body-parser';
+
 const app = express();
-app.use(express.json());
+app.use(bodyParser.json());
 
 const PORT = 3000;
 
