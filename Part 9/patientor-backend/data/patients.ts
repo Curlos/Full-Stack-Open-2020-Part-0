@@ -15,7 +15,7 @@ const patients: Array<Patient> = [
       "name": "Martin Riggs",
       "dateOfBirth": "1979-01-30",
       "ssn": "300179-77A",
-      "gender": '"male"',
+      "gender": "male",
       "occupation": "Cop",
       "entries": []
   },
