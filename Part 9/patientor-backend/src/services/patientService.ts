@@ -1,25 +1,30 @@
 import patients from '../../data/patients';
-import { noSsnPatients, Patient, NewPatient } from '../types';
+import { PublicPatient, Patient, NewPatient } from '../types';
 
 
 const getPatients = (): Array<Patient> => {
   return patients;
 }
 
-const getNoSsnPatients = (): noSsnPatients[] => {
-  return patients.map(({ id, name, dateOfBirth, gender, occupation}) => ({
+const getPublicPatients = (): PublicPatient[] => {
+  return patients.map(({ id, name, occupation, gender, dateOfBirth}) => ({
     id, 
     name, 
-    dateOfBirth, 
+    occupation, 
     gender, 
-    occupation
+    dateOfBirth
   }));
 };
+
+const findById = (id: string): Patient | undefined => {
+  const patient = patients.find(patient => patient.id === id);
+  return patient;
+}
 
 const addPatient = ( patient: NewPatient ): Patient => {
   const newPatient = {
     id: String(Math.max(...patients.map(p => Number(p.id))) + 1), 
-      ...patient
+    ...patient
   };
 
   patients.push(newPatient);
@@ -28,6 +33,7 @@ const addPatient = ( patient: NewPatient ): Patient => {
 
 export default {
   getPatients,
+  findById,
   addPatient,
-  getNoSsnPatients
+  getPublicPatients
 };
