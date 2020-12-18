@@ -1,18 +1,17 @@
 import React from "react";
+import { UnionOrIntersectionType } from "typescript";
+import {CoursePart} from "../utils/types"
+import Part from './Part';
 
-interface ArrayProps {
-  name: string,
-  exerciseCount: number
-}
 
 interface ContentProps {
-  courseParts: Array<ArrayProps>;
+  courseParts: CoursePart[];
 }
 
 const Content: React.FC<ContentProps> = ({ courseParts }) => {
 return <p>{courseParts.map((coursePart, i) => 
-  <p key={i}>{coursePart.name} {coursePart.exerciseCount}</p>
-)}</p>
+    <Part coursePart={coursePart} key={i}/>
+  )}</p>
 }
 
 export default Content;
