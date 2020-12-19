@@ -17,15 +17,15 @@ const parseDate = (date: any): string => {
 
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const toNewHospitalEntry = (object: { type: any; date: any; specialist: any; diagnosisCodes: any; description: any; discharge: any;}): NewEntry => {
+const toNewHealthCheckEntry = (object: { type: any; date: any; specialist: any; diagnosisCodes: any; description: any; healthCheckRating: any;}): NewEntry => {
   return {
     type: object.type,
     date: parseDate(object.date),
     specialist: object.specialist,
     diagnosisCodes: object.diagnosisCodes,
     description: object.description,
-    discharge: object.discharge,
+    healthCheckRating: object.healthCheckRating,
   };
 }
 
-export default toNewHospitalEntry;
+export default toNewHealthCheckEntry;

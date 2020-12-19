@@ -1,6 +1,8 @@
 import express from 'express';
 import patientService from '../services/patientService';
 import toNewHospitalEntry from '../utils/toNewHospitalEntry';
+import toNewOccupationalHealthcareEntry from '../utils/toNewOccupationalHealthcareEntry';
+import toNewHealthCheckEntry from '../utils/toNewHealthCheckEntry';
 import toNewPatient from '../utils/toNewPatient';
 
 const router = express.Router();
@@ -31,7 +33,23 @@ router.post('/', (_req, res) => {
 })
 
 router.post('/:id/entries', (_req, res) => {
-  const newEntry = toNewHospitalEntry(_req.body);
+
+  let newEntry = _req.body;
+
+  switch(_req.body.type) {
+    case "Hospital":
+      newEntry = toNewHospitalEntry(_req.body);
+      break;
+    case "OccupationalHealthcare":
+      newEntry = toNewOccupationalHealthcareEntry(_req.body);
+      break;
+    case "HealthCheck":
+      newEntry = toNewHealthCheckEntry(_req.body);
+      break;
+    default: 
+      break;
+  }
+
   const patientID = _req.params.id
   const addedEntry = patientService.addEntry(newEntry, patientID);
   return res.json(addedEntry);

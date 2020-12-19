@@ -32,26 +32,20 @@ const addPatient = ( patient: NewPatient ): Patient => {
 };
 
 const addEntry = ( entry: NewEntry | never, patientID: string ): NewEntry | null => {
+  let newEntry = null;
 
-  switch(entry.type) {
-    case "Hospital":
-      let newEntry = null;
+  patients.map((patient) => {
+    if(patient.id === patientID) {
+      console.log(...patient.entries.map(entry => Number(entry.id)))
+      newEntry = {
+        id: String(Math.max(...patient.entries.map(entry => Number(entry.id))) + 1),
+        ...entry
+      };
+      patient.entries.push(newEntry);
+    }
+  });
 
-      patients.map((patient) => {
-        if(patient.id === patientID) {
-          console.log(...patient.entries.map(entry => Number(entry.id)))
-          newEntry = {
-            id: String(Math.max(...patient.entries.map(entry => Number(entry.id))) + 1),
-            ...entry
-          };
-          patient.entries.push(newEntry);
-        }
-      });
-
-      return newEntry;
-    default:
-      return null;
-  }
+  return newEntry;
 };
 
 export default {
