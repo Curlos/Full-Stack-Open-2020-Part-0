@@ -1,9 +1,10 @@
 import React from "react";
-import { Patient } from "../types";
+import { Patient, Diagnosis } from "../types";
 
-const PatientInfo: React.FC<{patient: Patient | null | undefined}> = ({patient}) => {
+const PatientInfo: React.FC<{patient: Patient | null | undefined, diagnoses: { [code: string]: Diagnosis }}> = ({patient, diagnoses}) => {
+  
+
   if(patient) {
-    console.log(patient)
     return (
       <div>
         <h1>
@@ -14,12 +15,22 @@ const PatientInfo: React.FC<{patient: Patient | null | undefined}> = ({patient})
 
         <h2>entries</h2>
         {patient.entries.map((entry, i) => {
-          console.log(entry)
           return (
             <div key={i}>
               <p key={i}>{entry.date} <i>{entry.description}</i></p>
               <ul>
-                {entry.diagnosisCodes?.map((diagnosisCode, i) => <li key={i}>{diagnosisCode}</li>)}
+                {entry.diagnosisCodes?.map((diagnosisCode, i) => {
+                  const diagnosis = Object.values(diagnoses).find(diagnosis => diagnosis.code === diagnosisCode);
+                  let diagnosisName = '';
+
+                  if(diagnosis) {
+                    diagnosisName = diagnosis.name;
+                  }
+                  
+                  return (
+                    <li key={i}>{diagnosisCode} {diagnosisName}</li>
+                  )
+                })}
               </ul>
             </div>
             

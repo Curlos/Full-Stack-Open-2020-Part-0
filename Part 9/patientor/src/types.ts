@@ -67,6 +67,7 @@ export type Entry =
   | HealthCheckEntry;
 
 export const SET_PATIENT_LIST = 'SET_PATIENT_LIST'
+export const SET_DIAGNOSIS_LIST = 'SET_DIAGNOSIS_LIST'
 export const ADD_PATIENT = 'ADD_PATIENT'
 
 interface SetPatientListAction {
@@ -77,6 +78,11 @@ interface SetPatientListAction {
 interface AddPatientAction {
   type: typeof ADD_PATIENT
   payload: Patient
+}
+
+export interface SetDiagnosisListAction {
+  type: typeof SET_DIAGNOSIS_LIST
+  payload: Diagnosis[]
 }
 
 export type PatientActionTypes = SetPatientListAction | AddPatientAction
