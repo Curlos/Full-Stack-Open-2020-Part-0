@@ -1,5 +1,5 @@
 import patients from '../../data/patients';
-import { PublicPatient, Patient, NewPatient } from '../types';
+import { PublicPatient, Patient, NewPatient, NewEntry } from '../types';
 
 
 const getPatients = (): Array<Patient> => {
@@ -31,9 +31,33 @@ const addPatient = ( patient: NewPatient ): Patient => {
   return newPatient;
 };
 
+const addEntry = ( entry: NewEntry | never, patientID: string ): NewEntry | null => {
+
+  switch(entry.type) {
+    case "Hospital":
+      let newEntry = null;
+
+      patients.map((patient) => {
+        if(patient.id === patientID) {
+          console.log(...patient.entries.map(entry => Number(entry.id)))
+          newEntry = {
+            id: String(Math.max(...patient.entries.map(entry => Number(entry.id))) + 1),
+            ...entry
+          };
+          patient.entries.push(newEntry);
+        }
+      });
+
+      return newEntry;
+    default:
+      return null;
+  }
+};
+
 export default {
   getPatients,
   findById,
   addPatient,
-  getPublicPatients
+  getPublicPatients,
+  addEntry
 };

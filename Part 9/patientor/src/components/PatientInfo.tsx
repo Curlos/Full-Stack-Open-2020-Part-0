@@ -12,7 +12,6 @@ const EntryDetails: React.FC<{ entry: Entry }> = ({ entry }) => {
   switch(entry.type) {
     case "Hospital":
       return (
-        
         <Card>
           <Card.Content>
             <Card.Header>{entry.date} <Icon name='hospital' size='big'/></Card.Header>

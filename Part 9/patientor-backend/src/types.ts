@@ -44,7 +44,7 @@ export type SickLeave = {
 export interface OccupationalHealthcareEntry extends BaseEntry {
   type: "OccupationalHealthcare";
   employerName: string;
-  sickLeave: SickLeave;
+  sickLeave?: SickLeave;
 }
 
 export enum HealthCheckRating {
@@ -69,3 +69,11 @@ export type PublicPatient = Omit<Patient, 'ssn' | 'entries' >
 export type NonLatinDiagnose = Omit<Diagnose, 'latin'>;
 
 export type NewPatient = Omit<Patient, 'id'>;
+
+export type NewEntry = 
+  | Omit<HospitalEntry, 'id'> 
+  | Omit<OccupationalHealthcareEntry, 'id'>
+  | Omit<HealthCheckEntry, 'id'>;
+
+
+export type NewHospitalEntry = Omit<HospitalEntry, 'id'>;
