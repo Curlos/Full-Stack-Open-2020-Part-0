@@ -1,6 +1,11 @@
 import React from "react";
-import { Patient, Diagnosis, Entry } from "../types";
-import { Card, Icon, Image, Container } from 'semantic-ui-react'
+import axios from "axios";
+import { Patient, Diagnosis, Entry, NewEntry } from "../types";
+import AddEntryModal from "../AddEntryModal";
+import { EntryFormValues } from "../AddEntryModal/AddEntryForm";
+import { Card, Icon, Button } from 'semantic-ui-react'
+import { apiBaseUrl } from "../constants";
+import { useStateValue, addPatient } from "../state";
 
 const assertNever = (value: never): never => {
   throw new Error(
@@ -73,9 +78,36 @@ const EntryDetails: React.FC<{ entry: Entry }> = ({ entry }) => {
 }
 
 const PatientInfo: React.FC<{patient: Patient | null | undefined, diagnoses: { [code: string]: Diagnosis }}> = ({patient, diagnoses}) => {
+
+  const [{ patients }, dispatch] = useStateValue();
+
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<string | undefined>();
+
+  const openModal = (): void => setModalOpen(true);
+
+  const closeModal = (): void => {
+    setModalOpen(false);
+    setError(undefined);
+  };
   
 
   if(patient) {
+
+    const submitNewEntry = async (values: EntryFormValues) => {
+      try {
+        const { data: newEntry } = await axios.post<NewEntry>(
+          `${apiBaseUrl}/patients/${patient.id}/entries`,
+          values
+        );
+        
+        closeModal();
+      } catch (e) {
+        console.error(e.response.data);
+        setError(e.response.data.error);
+      }
+    };
+
     return (
       <div>
         <h1>
@@ -93,6 +125,13 @@ const PatientInfo: React.FC<{patient: Patient | null | undefined, diagnoses: { [
             
           )
         })}
+        <AddEntryModal
+        modalOpen={modalOpen}
+        onSubmit={() => console.log('hello')}
+        error={error}
+        onClose={closeModal}
+      />
+      <Button onClick={() => openModal()}>Add New Patient</Button>
       </div>
     )
   } else {

@@ -31,7 +31,7 @@ const addPatient = ( patient: NewPatient ): Patient => {
   return newPatient;
 };
 
-const addEntry = ( entry: NewEntry | never, patientID: string ): NewEntry | null => {
+const addEntry = ( entry: NewEntry, patientID: string ): NewEntry | null => {
   let newEntry = null;
 
   patients.map((patient) => {

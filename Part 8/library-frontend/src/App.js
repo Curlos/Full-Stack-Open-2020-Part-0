@@ -29,6 +29,8 @@ const App = () => {
     return <div>loading...</div>
   }
 
+  console.log(booksResult);
+
   const notify = (message) => {
     setErrorMessage(message)
     setTimeout(() => {

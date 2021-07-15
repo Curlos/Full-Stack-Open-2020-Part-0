@@ -11,6 +11,12 @@ export enum Gender {
   Other = "other"
 }
 
+export enum EntryTypes {
+  HospitalEntry = "Hospital",
+  OccupationalHealthcareEntry = "OccupationalHealthcare",
+  HealthCheckEntry = "HealthCheck"
+}
+
 export interface Patient {
   id: string;
   name: string;
@@ -18,7 +24,7 @@ export interface Patient {
   occupation: string;
   gender: Gender;
   dateOfBirth: string;
-  entries: Entry[]
+  entries: Entry[];
 }
 export interface BaseEntry {
   id: string;
@@ -31,7 +37,7 @@ export interface BaseEntry {
 export type Discharge = {
   date: string;
   criteria: string;
-}
+};
 
 export interface HospitalEntry extends BaseEntry {
   type: "Hospital";
@@ -41,7 +47,7 @@ export interface HospitalEntry extends BaseEntry {
 export type SickLeave = {
   startDate: string;
   endDate: string;
-}
+};
 
 export interface OccupationalHealthcareEntry extends BaseEntry {
   type: "OccupationalHealthcare";
@@ -66,23 +72,37 @@ export type Entry =
   | OccupationalHealthcareEntry
   | HealthCheckEntry;
 
-export const SET_PATIENT_LIST = 'SET_PATIENT_LIST'
-export const SET_DIAGNOSIS_LIST = 'SET_DIAGNOSIS_LIST'
-export const ADD_PATIENT = 'ADD_PATIENT'
+export type NewEntry = 
+  | Omit<HospitalEntry, 'id'> 
+  | Omit<OccupationalHealthcareEntry, 'id'>
+  | Omit<HealthCheckEntry, 'id'>;
+  
+export type NewHospitalEntry = Omit<HospitalEntry, 'id'>;
+
+export const SET_PATIENT_LIST = 'SET_PATIENT_LIST';
+export const SET_DIAGNOSIS_LIST = 'SET_DIAGNOSIS_LIST';
+export const ADD_PATIENT = 'ADD_PATIENT';
+export const ADD_ENTRY = 'ADD_ENTRY';
 
 interface SetPatientListAction {
-  type: typeof SET_PATIENT_LIST
-  payload: Patient[]
+  type: typeof SET_PATIENT_LIST;
+  payload: Patient[];
 }
 
 interface AddPatientAction {
-  type: typeof ADD_PATIENT
-  payload: Patient
+  type: typeof ADD_PATIENT;
+  payload: Patient;
+}
+
+export interface AddEntryAction {
+  type: typeof ADD_ENTRY;
+  payload: NewEntry;
+  patientID: string;
 }
 
 export interface SetDiagnosisListAction {
-  type: typeof SET_DIAGNOSIS_LIST
-  payload: Diagnosis[]
+  type: typeof SET_DIAGNOSIS_LIST;
+  payload: Diagnosis[];
 }
 
-export type PatientActionTypes = SetPatientListAction | AddPatientAction
+export type PatientActionTypes = SetPatientListAction | AddPatientAction;
