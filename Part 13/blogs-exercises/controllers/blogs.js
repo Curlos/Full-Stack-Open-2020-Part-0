@@ -30,6 +30,17 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+router.put('/:id', async (req, res) => {
+  try {
+    const blog = await Blog.findByPk(req.params.id)
+    blog.likes = blog.likes + 1
+    await blog.save()
+    res.json({ likes: blog.likes })
+  } catch (err) {
+    res.status(404).json(err)
+  }
+})
+
 router.delete('/:id', async (req, res) => {
   try {
     const blog = await Blog.findByPk(req.params.id)
