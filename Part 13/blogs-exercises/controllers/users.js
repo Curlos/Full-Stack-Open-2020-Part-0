@@ -4,6 +4,7 @@ const { User } = require('../models')
 
 router.get('/', async (req, res) => {
   const users = await User.findAll()
+  res.json(users)
 })
 
 router.post('/', async (req, res) => {
@@ -24,3 +25,4 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+module.exports = router
