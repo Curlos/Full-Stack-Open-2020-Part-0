@@ -1,10 +1,38 @@
 const router = require('express').Router()
+const jwt = require('jsonwebtoken')
 
-const { Note } = require('../models')
+const { SECRET } = require('../util/config')
+const { Note, User } = require('../models')
+
+const tokenExtractor = (req, res, next) => {
+  const authorization = req.get('authorization')
+
+  console.log(SECRET)
+
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    try {
+      console.log(authorization.substring(7))
+      req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
+    } catch(err) {
+      console.error(err)
+      return res.status(401).json({ err })
+    }
+  } else {
+    return res.status(401).json({ error: 'token missing' })
+  }
+
+  next()
+}
 
 router.get('/', async (req, res) => {
   try {
-    const notes = await Note.findAll()
+    const notes = await Note.findAll({
+      attributes: { exclude: ['userId'] },
+      include: {
+        model: User,
+        attributes: ['name']
+      }
+    })
     console.log(JSON.stringify(notes, null, 2))
     res.json(notes)
   } catch (err) {
@@ -12,10 +40,16 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', tokenExtractor, async (req, res) => {
   try {
+    console.log(req.decodedToken)
     console.log(req.body)
-    const note = await Note.create(req.body)
+    const user = await User.findByPk(req.decodedToken.id)
+    const note = await Note.create({ 
+      ...req.body, 
+      userId: user.id, 
+      date: new Date()
+    })
     return res.json(note)
   } catch (err) {
     return res.status(400).json({ err })
