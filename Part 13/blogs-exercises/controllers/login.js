@@ -11,8 +11,6 @@ router.post('/', async (req, res) => {
     }
   })
 
-  console.log(user.password)
-
   const passwordCorrect = (req.body.password === user.password)
 
   if (!(user && passwordCorrect)) {
