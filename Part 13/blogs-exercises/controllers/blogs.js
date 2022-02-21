@@ -15,12 +15,9 @@ const { sequelize } = require('../models/blog')
 const tokenExtractor = (req, res, next) => {
   const authorization = req.get('authorization')
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    
-    console.log(authorization.substring(7))
-    console.log(SECRET)
+
     try {
       req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
-      console.log(req.decodedToken)
     } catch (err) {
       return res.status(401).json({ err })
     }
@@ -41,8 +38,6 @@ router.get('/', async (req, res) => {
         { author: { [Op.substring]: req.query.search } }
       ]
     }
-
-    console.log(where)
 
     const blogs = await Blog.findAll({
       attributes: { exclude: ['userId'] },
