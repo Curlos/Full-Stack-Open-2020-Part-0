@@ -1,6 +1,11 @@
 const router = require('express').Router()
-
+require('express-async-errors')
 const { Blog } = require('../models')
+
+// router.use(async (req, res, next) => {
+//   console.log(req.body)
+//   next()
+// })
 
 router.get('/', async (req, res) => {
   try {
@@ -11,6 +16,15 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/:id', async (req, res) => {
+  try {
+    const blog = await Blog.findByPk(req.params.id)
+    res.json(blog)
+  } catch (err) {
+    res.status(404).json(err)
+  }
+})
+
 router.post('/', async (req, res) => {
   try {
     console.log(req.body)
@@ -18,15 +32,6 @@ router.post('/', async (req, res) => {
     return res.json(blog)
   } catch (err) {
     return res.status(400).json({ err })
-  }
-})
-
-router.get('/:id', async (req, res) => {
-  try {
-    const blog = await Blog.findByPk(req.params.id)
-    res.json(blog)
-  } catch (err) {
-    res.status(404).json(err)
   }
 })
 
