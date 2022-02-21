@@ -10,6 +10,14 @@ User.init({
     primaryKey: true,
     autoIncrement: true
   },
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    validate: {
+      isEmail: true,
+    },
+    allowNull: false
+  },
   username: {
     type: DataTypes.STRING,
     unique: true,
@@ -26,7 +34,6 @@ User.init({
 }, {
   sequelize,
   underscored: true,
-  timestamps: false,
   modelName: 'user'
 })
 
