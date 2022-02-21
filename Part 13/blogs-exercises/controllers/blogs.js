@@ -78,11 +78,19 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', tokenExtractor, async (req, res) => {
   try {
+    const user = await User.findByPk(req.decodedToken.id)
     const blog = await Blog.findByPk(req.params.id)
-    await blog.destroy()
-    res.json(blog)
+
+    if (user.id === blog.userId) {
+      await blog.destroy()
+      return res.json({ blog, user})
+    }
+
+    return res.json({ 
+      error: 'Must be author to delete blog!'
+    })
   } catch (err) {
     res.status(404).json(err)
   }
