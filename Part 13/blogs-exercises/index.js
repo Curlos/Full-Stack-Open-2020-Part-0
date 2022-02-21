@@ -62,6 +62,25 @@ app.post('/api/blogs', async (req, res) => {
   }
 })
 
+app.get('/api/blogs/:id', async (req, res) => {
+  try {
+    const blog = await Blog.findByPk(req.params.id)
+    res.json(blog)
+  } catch (err) {
+    res.status(404).json(err)
+  }
+})
+
+app.delete('/api/blogs/:id', async (req, res) => {
+  try {
+    const blog = await Blog.findByPk(req.params.id)
+    await blog.destroy()
+    res.json(blog)
+  } catch (err) {
+    res.status(404).json(err)
+  }
+})
+
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
