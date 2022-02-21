@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 require('express-async-errors')
 const { SECRET } = require('../util/config')
 const { Blog, User } = require('../models')
+const { sequelize } = require('../models/blog')
 
 
 // router.use(async (req, res, next) => {
@@ -49,7 +50,8 @@ router.get('/', async (req, res) => {
         model: User,
         attributes: ['name']
       },
-      where
+      where,
+      order: [['likes', 'DESC']]
     })
     res.json(blogs)
 
