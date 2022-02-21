@@ -1,4 +1,3 @@
-const { userInfo } = require('os')
 const Blog = require('./blog')
 const User = require('./user')
 
